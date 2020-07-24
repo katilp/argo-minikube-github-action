@@ -20,27 +20,28 @@ jobs:
         # $HOME : /home/runner
         # whoami : runner
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
+        here=$(echo pwd)
         mkdir bin
         ls -l
-        export PATH="/home/runner/work/argo-minikube-github-action/argo-minikube-github-action/bin:$PATH"
+        export PATH="${here}/bin:$PATH"
         echo $PATH
         mv ./argo-linux-amd64 bin/argo
         argo version
-    - name: Build image
+    - name: Verify images
       run: |
         export SHELL=/bin/bash
         eval $(minikube -p minikube docker-env)
         #docker build -f ./Dockerfile -t local/example .
         echo -n "verifying images:"
         docker images
-    - name: Deploy to minikube
+    - name: Do nothing
       run:
         pwd
         ls -l
         #kubectl apply -f deploy-to-minikube.yaml
-    - name: Test service URLs
+    - name: Is argo still there?
       run: |
         minikube service list
-        minikube service example --url
-        echo "------------------opening the service------------------"
-        curl $(minikube service example --url)
+        #minikube service example --url
+        #echo "------------------opening the service------------------"
+        #curl $(minikube service example --url)
