@@ -34,14 +34,19 @@ jobs:
         #docker build -f ./Dockerfile -t local/example .
         echo -n "verifying images:"
         docker images
-    - name: Do nothing
-      run:
-        pwd
-        ls -l
+    - name: Submit the argo test workflow
+      run: |
+        argo submit -n argo --watch https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml
+        argo list -n argo
+        argo get -n argo @latest
+        argo logs -n argo @latest
         #kubectl apply -f deploy-to-minikube.yaml
-    - name: Is argo still there?
+    - name: Is my workflow still there?
       run: |
         minikube service list
+        argo list -n argo
+        argo get -n argo @latest
+        argo logs -n argo @latest
         #minikube service example --url
         #echo "------------------opening the service------------------"
         #curl $(minikube service example --url)
