@@ -20,10 +20,10 @@ jobs:
         # $HOME : /home/runner
         # whoami : runner
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
-        here=$(echo pwd)
+        here=`pwd`
         mkdir bin
         ls -l
-        export PATH="${here}/bin:$PATH"
+        export PATH="$here/bin:$PATH"
         echo $PATH
         mv ./argo-linux-amd64 bin/argo
         argo version
