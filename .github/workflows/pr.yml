@@ -18,16 +18,12 @@ jobs:
         curl -sLO https://github.com/argoproj/argo/releases/download/v2.10.0-rc3/argo-linux-amd64
         chmod +x argo-linux-amd64 
         # $HOME : /home/runner
-        echo whoami
-        whoami
-        here=$(echo pwd)
-        pwd
+        # whoami : runner
+        # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
         mkdir bin
         ls -l
-        export PATH="$here/bin:$PATH"
+        export PATH="/home/runner/work/argo-minikube-github-action/argo-minikube-github-action/bin:$PATH"
         echo $PATH
-        echo pwd
-        pwd
         mv ./argo-linux-amd64 bin/argo
         argo version
     - name: Build image
