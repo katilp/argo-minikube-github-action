@@ -28,6 +28,8 @@ jobs:
         docker images
     - name: Deploy to minikube
       run:
+        pwd
+        ls -l
         #kubectl apply -f deploy-to-minikube.yaml
     - name: Test service URLs
       run: |
