@@ -16,8 +16,10 @@ jobs:
         kubectl create ns argo
         kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
         curl -sLO https://github.com/argoproj/argo/releases/download/v2.10.0-rc3/argo-linux-amd64
-        chmod +x argo-linux-amd64  
-        mv ./argo-linux-amd64 /usr/local/bin/argo
+        chmod +x argo-linux-amd64 
+        mkdir $HOME/bin
+        export PATH="$HOME/bin:$PATH"
+        mv ./argo-linux-amd64 $HOME/bin/argo
         argo version
     - name: Build image
       run: |
