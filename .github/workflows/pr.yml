@@ -18,8 +18,12 @@ jobs:
         curl -sLO https://github.com/argoproj/argo/releases/download/v2.10.0-rc3/argo-linux-amd64
         chmod +x argo-linux-amd64 
         mkdir $HOME/bin
+        ls -l
         export PATH="$HOME/bin:$PATH"
-        mv ./argo-linux-amd64 $HOME/bin/argo
+        echo $PATH
+        echo pwd
+        pwd
+        mv ./argo-linux-amd64 bin/argo
         argo version
     - name: Build image
       run: |
