@@ -36,6 +36,8 @@ jobs:
         docker images
     - name: Submit the argo test workflow
       run: |
+        here=`pwd`
+        export PATH="$here/bin:$PATH"
         argo submit -n argo --watch https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml
         argo list -n argo
         argo get -n argo @latest
@@ -44,6 +46,8 @@ jobs:
     - name: Is my workflow still there?
       run: |
         minikube service list
+        here=`pwd`
+        export PATH="$here/bin:$PATH"
         argo list -n argo
         argo get -n argo @latest
         argo logs -n argo @latest
