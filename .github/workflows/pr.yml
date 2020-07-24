@@ -29,6 +29,10 @@ jobs:
         argo version
     - name: Verify images
       run: |
+        echo pwd
+        pwd
+        echo ls -l
+        ls -l
         export SHELL=/bin/bash
         eval $(minikube -p minikube docker-env)
         #docker build -f ./Dockerfile -t local/example .
@@ -36,6 +40,10 @@ jobs:
         docker images
     - name: Submit the argo test workflow
       run: |
+        echo pwd
+        pwd
+        echo ls -l
+        ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
         argo submit -n argo --watch https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml
