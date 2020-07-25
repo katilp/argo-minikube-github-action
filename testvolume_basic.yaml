@@ -14,6 +14,8 @@ spec:
       command: [sh]
       source: |
         ls /mnt/vol
+        echo Can I see the output?
+        echo Another output line...
       volumeMounts:
       - name: workdir
         mountPath: /mnt/vol
