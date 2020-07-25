@@ -10,7 +10,7 @@ spec:
       hostPath:
         path: /home/runner/work/argo-minikube-github-action/argo-minikube-github-action/data
         type: DirectoryOrCreate
-
+  
   templates:
     - name: test-vols
       container:
@@ -18,5 +18,5 @@ spec:
         volumeMounts:
           - name: nac-volume
             mountPath: /data
-        command: [sh -c]
-        args: ["echo test > /data/test.txt", "echo ls -l /data", "ls -l data", "echo pwd", "pwd"]
+        command: [sh, -c]
+        args: ["echo pwd", "pwd", "echo ls -l", "ls -l /data", "touch /data/test.txt", "ls -l /data"]
