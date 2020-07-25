@@ -10,7 +10,7 @@ spec:
     persistentVolumeClaim:
       claimName: my-existing-volume
 
-templates:
+  templates:
   - name: A
     steps:
     - - name: generate
