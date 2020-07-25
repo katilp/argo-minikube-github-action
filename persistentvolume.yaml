@@ -9,7 +9,7 @@ spec:
   - name: workdir
     persistentVolumeClaim:
       claimName: my-existing-volume
-
+      
   templates:
   - name: A
     steps:
