@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: wf_with_pvc-
+  generateName: workflow-with-pvc-
 spec:
   entrypoint: A
   volumes:
