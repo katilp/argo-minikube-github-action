@@ -47,7 +47,7 @@ jobs:
         ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
-        argo submit -n argo --watch volumetest.yaml
+        argo submit -n argo --watch testvolume_basic.yaml
         argo list -n argo
         argo get -n argo @latest
         argo logs -n argo @latest

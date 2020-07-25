@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: script-with-vol-
+spec:
+  entrypoint: script-with-vol
+  volumes:
+  - name: workdir
+    emptyDir: {}
+  templates:
+  - name: script-with-vol
+    script:
+      image: alpine:latest
+      command: [sh]
+      source: |
+        ls /mnt/vol
+        echo Can I see the output?
+        echo Another output line...
+        echo ls -l /mnt/vol: `ls -l /mnt/vol`
+        echo pwd: `pwd`
+        echo ls /mnt: `ls /mnt`
+        touch /mnt/vol/test.txt
+        echo ls -l /mnt/vol: `ls -l /mnt/vol`
+        echo ls /: `ls /`
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/vol
