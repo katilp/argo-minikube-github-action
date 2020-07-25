@@ -16,8 +16,10 @@ spec:
         ls /mnt/vol
         echo Can I see the output?
         echo Another output line...
-        echo `ls -l /mnt/vol`
-        echo `pwd`
+        echo ls -l /mnt/vol: `ls -l /mnt/vol`
+        echo pwd: `pwd`
+        echo ls -l: `ls -l`
+        echo ls /: `ls /`
       volumeMounts:
       - name: workdir
         mountPath: /mnt/vol
