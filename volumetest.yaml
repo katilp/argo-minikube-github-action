@@ -13,11 +13,14 @@ spec:
 
   templates:
     - name: test-vols
-      container:
+      inputs:
+        parameters:
+        - name: command
+      script: 
         image: ubuntu
         volumeMounts:
-          - name: nac-volume
-            mountPath: /data
+        - mountPath: /data
+          name: nac-volume
         command: [bash]
         source: |
           echo test > /data/test.txt
