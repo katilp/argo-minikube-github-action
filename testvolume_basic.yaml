@@ -18,7 +18,9 @@ spec:
         echo Another output line...
         echo ls -l /mnt/vol: `ls -l /mnt/vol`
         echo pwd: `pwd`
-        echo ls -l: `ls -l`
+        echo ls /mnt: `ls /mnt`
+        touch /mnt/vol/test.txt
+        echo ls -l /mnt/vol: `ls -l /mnt/vol`
         echo ls /: `ls /`
       volumeMounts:
       - name: workdir
