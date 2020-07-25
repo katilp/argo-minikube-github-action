@@ -11,6 +11,8 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A
+    - name: Create persintent volume claim
+      run: kubectl create -f testvolume.yaml
     - name: Setup argo
       run: |
         kubectl create ns argo
