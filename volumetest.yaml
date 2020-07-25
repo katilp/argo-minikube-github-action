@@ -1,22 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: voltest-
-  #namespace: default
+  generateName: test-hostpath-
 spec:
-  entrypoint: test-vols
+  entrypoint: test-hostpath
   volumes:
-    - name: nac-volume
+    - name: workdir
       hostPath:
         path: /home/runner/work/argo-minikube-github-action/argo-minikube-github-action/data
         type: DirectoryOrCreate
-  
   templates:
-    - name: test-vols
-      container:
-        image: ubuntu
-        volumeMounts:
-          - name: nac-volume
-            mountPath: /data
-        command: [sh, -c]
-        args: ["echo pwd", "pwd", "echo ls -l", "ls -l /data", "touch /data/test.txt", "ls -l /data"]
+  - name: test-hostpath
+    script:
+      image: alpine:latest
+      command: [sh]
+      source: |
+        echo This is the output:
+        echo ls -l /mnt/vol: `ls -l /mnt/vol`
+        echo pwd: `pwd`
+        echo ls /mnt: `ls /mnt`
+        touch /mnt/vol/test.txt
+        echo ls -l /mnt/vol: `ls -l /mnt/vol`
+        echo ls /: `ls /`
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/vol
+
