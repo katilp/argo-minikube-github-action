@@ -51,11 +51,16 @@ jobs:
         argo list -n argo
         argo get -n argo @latest
         argo logs -n argo @latest
-    - name: Is my workflow still there?
+        echo ls -l data
+        ls -l data
+    - name: Check the output
       run: |
-        minikube service list
+        echo pwd
+        pwd
+        echo ls -l
+        ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
-        argo list -n argo
-        argo get -n argo @latest
         argo logs -n argo @latest
+        echo ls -l data
+        ls -l data
