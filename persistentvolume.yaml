@@ -1,0 +1,39 @@
+# from https://github.com/argoproj/argo/blob/master/examples/volumes-existing.yaml with some renaming
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: wf_with_pvc-
+spec:
+  entrypoint: A
+  volumes:
+  - name: workdir
+    persistentVolumeClaim:
+      claimName: my-existing-volume
+
+templates:
+  - name: A
+    steps:
+    - - name: generate
+        template: append-to-accesslog
+    - - name: print
+        template: print-accesslog
+
+  - name: append-to-accesslog
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo accessed at: $(date) | tee -a /mnt/vol/accesslog"]
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/vol
+
+  - name: print-accesslog
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo 'Volume access log:'; cat /mnt/vol/accesslog"]
+      volumeMounts:
+      - name: workdir
+        mountPath: /mnt/vol
+      
+  
