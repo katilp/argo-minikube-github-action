@@ -12,7 +12,9 @@ jobs:
     - name: Try the cluster !
       run: kubectl get pods -A
     - name: Create persintent volume claim
-      run: kubectl create -f testvolume.yaml
+      run: | 
+        kubectl create -f testvolume.yaml
+        kubectl get pvc
     - name: Setup argo
       run: |
         kubectl create ns argo
@@ -46,6 +48,7 @@ jobs:
         pwd
         echo ls -l
         ls -l
+        kubectl get pvc
         here=`pwd`
         export PATH="$here/bin:$PATH"
         argo submit -n argo --watch persistentvolume.yaml
