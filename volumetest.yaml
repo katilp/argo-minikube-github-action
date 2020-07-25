@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: voltest-
+  namespace: default
+spec:
+  entrypoint: test-vols
+  volumes:
+    - name: nac-volume
+      hostPath:
+        path: /home/runner/work/argo-minikube-github-action/argo-minikube-github-action/data
+        type: DirectoryOrCreate
+
+  templates:
+    - name: test-vols
+      container:
+        image: ubuntu
+        volumeMounts:
+          - name: nac-volume
+            mountPath: /data
+        command: [sh, -c]
+        args: ["echo test > /data/test.txt"]
