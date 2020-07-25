@@ -46,11 +46,10 @@ jobs:
         ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
-        argo submit -n argo --watch https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml
+        argo submit -n argo --watch persistentvolume.yaml
         argo list -n argo
         argo get -n argo @latest
         argo logs -n argo @latest
-        #kubectl apply -f deploy-to-minikube.yaml
     - name: Is my workflow still there?
       run: |
         minikube service list
@@ -59,6 +58,3 @@ jobs:
         argo list -n argo
         argo get -n argo @latest
         argo logs -n argo @latest
-        #minikube service example --url
-        #echo "------------------opening the service------------------"
-        #curl $(minikube service example --url)
