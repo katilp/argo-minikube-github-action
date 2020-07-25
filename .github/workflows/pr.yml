@@ -11,8 +11,6 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A
-    - name: Create persintent volume claim
-      run: kubectl create -f testvolume.yaml
     - name: Setup argo
       run: |
         kubectl create ns argo
@@ -24,6 +22,7 @@ jobs:
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
         here=`pwd`
         mkdir bin
+        mkdir data
         ls -l
         export PATH="$here/bin:$PATH"
         echo $PATH
@@ -48,7 +47,7 @@ jobs:
         ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
-        argo submit -n argo --watch persistentvolume.yaml
+        argo submit -n argo --watch volumetest.yaml
         argo list -n argo
         argo get -n argo @latest
         argo logs -n argo @latest
