@@ -18,5 +18,8 @@ spec:
         volumeMounts:
           - name: nac-volume
             mountPath: /data
-        command: [sh, -c]
-        args: ["echo test > /data/test.txt"]
+        command: [bash]
+        source: |
+          echo test > /data/test.txt
+          echo ls -l /data
+          ls -l /data
