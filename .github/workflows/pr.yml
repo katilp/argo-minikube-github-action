@@ -4,14 +4,15 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    name: build example and deploy to minikube
+    name: argo example workflow on minikube with output
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
-    - name: Try the cluster !
-      run: kubectl get pods -A
-    - name: Setup argo
+    - name: Set up persistent volume and storage pod
+      run: |
+        kubectl apply -f pv-volume.yaml   
+    - name: Set up argo
       run: |
         kubectl create ns argo
         kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
@@ -22,45 +23,24 @@ jobs:
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
         here=`pwd`
         mkdir bin
-        mkdir data
-        ls -l
         export PATH="$here/bin:$PATH"
         echo $PATH
         mv ./argo-linux-amd64 bin/argo
         argo version
-    - name: Verify images
-      run: |
-        echo pwd
-        pwd
-        echo ls -l
-        ls -l
-        export SHELL=/bin/bash
-        eval $(minikube -p minikube docker-env)
-        #docker build -f ./Dockerfile -t local/example .
-        echo -n "verifying images:"
-        docker images
     - name: Submit the argo test workflow
       run: |
-        echo pwd
-        pwd
-        echo ls -l
-        ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
-        argo submit -n argo --watch testvolume_pvc.yaml
-        argo list -n argo
+        argo submit -n argo  --wait volumetest.yaml
         argo get -n argo @latest
-        argo logs -n argo @latest
-        echo ls -l data
-        ls -l data
     - name: Check the output
       run: |
-        echo pwd
-        pwd
-        echo ls -l
-        ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
         argo logs -n argo @latest
-        echo ls -l data
-        ls -l data
+        echo Check node with minikube ssh "ls -l /mnt/data" :
+        minikube ssh "ls -l /mnt/data"
+        echo Copy file with kubectl cp task-pv-pod:/mnt/data/test.txt test.txt :
+        kubectl cp task-pv-pod:/mnt/data/test.txt test.txt 
+        echo ls -l :
+        ls -l

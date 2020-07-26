@@ -7,7 +7,7 @@ spec:
   volumes:
     - name: workdir
       hostPath:
-        path: /home/runner/work/argo-minikube-github-action/argo-minikube-github-action/data
+        path: /mnt/data
         type: DirectoryOrCreate
   templates:
   - name: test-hostpath
