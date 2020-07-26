@@ -40,7 +40,13 @@ jobs:
         argo logs -n argo @latest
         echo Check node with minikube ssh "ls -l /mnt/data" :
         minikube ssh "ls -l /mnt/data"
+        mkdir outputs
         echo Copy file with kubectl cp task-pv-pod:/mnt/data/test.txt test.txt :
-        kubectl cp task-pv-pod:/mnt/data/test.txt test.txt 
+        kubectl cp task-pv-pod:/mnt/data/test.txt outputs/test.txt 
         echo ls -l :
         ls -l
+    - name: Upload the ouput as a github artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: outputs/       
