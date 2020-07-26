@@ -19,9 +19,7 @@ jobs:
         exit
     - name: Set persistent volume and storage pod
       run: |
-        kubectl apply -f https://k8s.io/examples/pods/storage/pv-volume.yaml
-        kubectl apply -f https://k8s.io/examples/pods/storage/pv-claim.yaml
-        kubectl apply -f my-pv-pod.yaml   
+        kubectl apply -f pv-volume.yaml   
     - name: Setup argo
       run: |
         kubectl create ns argo
@@ -57,7 +55,7 @@ jobs:
         ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
-        argo submit -n argo --watch testvolume_pvc.yaml
+        argo submit -n argo --watch testvolume.yaml
         argo list -n argo
         argo get -n argo @latest
         argo logs -n argo @latest
