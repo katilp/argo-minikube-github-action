@@ -11,9 +11,6 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A
-    - name: Create the shared volume on the minikube node
-      run: | 
-        minikube ssh "sudo mkdir /mnt/data"
     - name: Set persistent volume and storage pod
       run: |
         kubectl apply -f pv-volume.yaml   
@@ -46,10 +43,6 @@ jobs:
         docker images
     - name: Submit the argo test workflow
       run: |
-        echo pwd
-        pwd
-        echo ls -l
-        ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
         argo submit -n argo --watch volumetest.yaml
@@ -61,4 +54,9 @@ jobs:
         here=`pwd`
         export PATH="$here/bin:$PATH"
         argo logs -n argo @latest
+        echo minikube ssh "ls -l /mnt/data" :
         minikube ssh "ls -l /mnt/data"
+        echo kubectl cp task-pv-pod:/mnt/data/test.txt test.txt :
+        kubectl cp task-pv-pod:/mnt/data/test.txt test.txt 
+        echo ls -l :
+        ls -l
