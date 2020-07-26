@@ -13,10 +13,7 @@ jobs:
       run: kubectl get pods -A
     - name: Create the shared volume on the minikube node
       run: | 
-        minikube ssh
-        sudo mkdir /mnt/data
-        sudo sh -c "echo 'Hello from Kubernetes storage' > /mnt/data/index.html"
-        exit
+        minikube ssh "sudo mkdir /mnt/data"
     - name: Set persistent volume and storage pod
       run: |
         kubectl apply -f pv-volume.yaml   
@@ -61,10 +58,7 @@ jobs:
         argo logs -n argo @latest
     - name: Check the output
       run: |
-        echo pwd
-        pwd
-        echo ls -l
-        ls -l
         here=`pwd`
         export PATH="$here/bin:$PATH"
         argo logs -n argo @latest
+        minikube ssh "ls -l /mnt/data"
