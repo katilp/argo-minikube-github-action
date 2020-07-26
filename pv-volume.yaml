@@ -39,5 +39,5 @@ spec:
       image: busybox
       command: ["tail", "-f", "/dev/null"]
       volumeMounts:
-        - mountPath: /mnt/vol
+        - mountPath: /mnt/data
           name: task-pv-storage
