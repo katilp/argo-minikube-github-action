@@ -33,8 +33,6 @@ jobs:
         argo version
     - name: Submit the argo test workflow
       run: |
-        here=`pwd`
-        export PATH="$here/bin:$PATH"
         argo submit -n argo  --wait volumetest.yaml
         argo get -n argo @latest
     - name: Check the output
