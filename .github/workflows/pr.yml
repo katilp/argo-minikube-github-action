@@ -29,7 +29,7 @@ jobs:
         export PATH="$here/bin:$PATH"
         echo $PATH
         echo MYENV $MYENV
-        mv ./argo-linux-amd64 bin/argo
+        mv ./argo-linux-amd64 $HOME/bin/argo
         argo version
     - name: Submit the argo test workflow
       run: |
