@@ -3,8 +3,6 @@ on:
   - pull_request
 jobs:
   job1:
-    env:
-      MYENV: myenv_value`pwd`
     runs-on: ubuntu-latest
     name: argo example workflow on minikube with output
     steps:
@@ -14,7 +12,6 @@ jobs:
     - name: Set up persistent volume and storage pod
       run: |
         kubectl apply -f pv-volume.yaml 
-        echo MYENV $MYENV
     - name: Set up argo
       run: |
         kubectl create ns argo
@@ -24,11 +21,6 @@ jobs:
         # $HOME : /home/runner
         # whoami : runner
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
-        here=`pwd`
-        mkdir bin
-        export PATH="$here/bin:$PATH"
-        echo $PATH
-        echo MYENV $MYENV
         mv ./argo-linux-amd64 $HOME/bin/argo
         argo version
     - name: Submit the argo test workflow
@@ -37,8 +29,6 @@ jobs:
         argo get -n argo @latest
     - name: Check the output
       run: |
-        here=`pwd`
-        export PATH="$here/bin:$PATH"
         argo logs -n argo @latest
         echo Check node with minikube ssh "ls -l /mnt/data" :
         minikube ssh "ls -l /mnt/data"
