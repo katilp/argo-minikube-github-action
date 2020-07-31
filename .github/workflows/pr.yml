@@ -4,7 +4,7 @@ on:
 jobs:
   job1:
     env:
-      MYENV: myenv_value
+      MYENV: myenv_value`pwd`
     runs-on: ubuntu-latest
     name: argo example workflow on minikube with output
     steps:
@@ -13,7 +13,8 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Set up persistent volume and storage pod
       run: |
-        kubectl apply -f pv-volume.yaml   
+        kubectl apply -f pv-volume.yaml 
+        echo MYENV $MYENV
     - name: Set up argo
       run: |
         kubectl create ns argo
