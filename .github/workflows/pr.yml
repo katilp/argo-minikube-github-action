@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     name: argo example workflow on minikube with output
     steps:
-    - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
     - name: Set up persistent volume and storage pod
