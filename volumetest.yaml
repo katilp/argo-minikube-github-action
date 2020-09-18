@@ -4,6 +4,12 @@ metadata:
   generateName: test-hostpath-
 spec:
   entrypoint: test-hostpath
+  arguments:
+    parameters:
+    - name: nevents
+      value: 1000
+    - name: config
+      value: "data_cfg.py"
   volumes:
     - name: workdir
       hostPath:
@@ -11,6 +17,10 @@ spec:
         type: DirectoryOrCreate
   templates:
   - name: test-hostpath
+    inputs:
+      parameters:
+      - name: nevents
+      - name: config
     script:
       image: cmsopendata/cmssw_5_3_32
       command: [sh]
