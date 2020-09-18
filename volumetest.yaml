@@ -15,7 +15,12 @@ spec:
       image: cmsopendata/cmssw_5_3_32
       command: [sh]
       source: |
+        source /opt/cms/entrypoint.sh
         sudo chown $USER /mnt/vol
+        mkdir workspace
+        cd workspace
+        git clone git://github.com/cms-opendata-analyses/AOD2NanoAODOutreachTool  AOD2NanoAOD
+        cd AOD2NanoAOD
         echo "This is the ouput" > /mnt/vol/test.txt
         echo ls -l /mnt/vol: `ls -l /mnt/vol`
       volumeMounts:
