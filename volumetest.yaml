@@ -4,10 +4,6 @@ metadata:
   generateName: test-hostpath-
 spec:
   entrypoint: test-hostpath
-  arguments:
-    parameters:
-    - name: nevents
-      value: 1000
   volumes:
     - name: workdir
       hostPath:
@@ -15,9 +11,6 @@ spec:
         type: DirectoryOrCreate
   templates:
   - name: test-hostpath
-    inputs:
-      parameters:
-      - name: nevents
     script:
       image: cmsopendata/cmssw_5_3_32
       command: [sh]
@@ -28,6 +21,8 @@ spec:
         cd workspace
         git clone git://github.com/cms-opendata-analyses/AOD2NanoAODOutreachTool  AOD2NanoAOD
         cd AOD2NanoAOD
+        eventline=$(grep maxEvents configs/data_cfg.py)
+        echo $eventline
         echo "This is the ouput" > /mnt/vol/test.txt
         echo ls -l /mnt/vol: `ls -l /mnt/vol`
       volumeMounts:
