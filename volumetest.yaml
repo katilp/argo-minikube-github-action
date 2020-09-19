@@ -23,6 +23,9 @@ spec:
         cd AOD2NanoAOD
         eventline=$(grep maxEvents configs/data_cfg.py)
         echo $eventline
+        sed -i "s/$eventline/process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )/g" configs/data_cfg.py
+        neweventline=$(grep maxEvents configs/data_cfg.py)
+        echo $neweventline
         echo "This is the ouput" > /mnt/vol/test.txt
         echo ls -l /mnt/vol: `ls -l /mnt/vol`
       volumeMounts:
