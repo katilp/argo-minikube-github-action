@@ -7,8 +7,8 @@ jobs:
     name: argo example workflow on minikube with  output
     steps:
     - uses: actions/checkout@v2
-    - name: Start minikube
-      uses: medyagh/setup-minikube@master
+    - name: setup-minikube
+      uses: medyagh/setup-minikube@v0.0.2
     - name: Set up persistent volume and storage pod
       run: |
         kubectl apply -f pv-volume.yaml 
