@@ -7,8 +7,12 @@ jobs:
     name: argo example workflow on minikube with output
     steps:
     - uses: actions/checkout@v2
-    - name: Start minikube
-      uses: medyagh/setup-minikube@master
+    - name: Check the runner
+      run: |
+        ls -l /usr/local/bin/
+    - name: setup-minikube
+      uses: medyagh/setup-minikube@v0.0.2
+      continue-on-error: true
     - name: Set up persistent volume and storage pod
       run: |
         kubectl apply -f pv-volume.yaml 
@@ -16,12 +20,14 @@ jobs:
       run: |
         kubectl create ns argo
         kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
-        curl -sLO https://github.com/argoproj/argo/releases/download/v2.10.0-rc3/argo-linux-amd64
-        chmod +x argo-linux-amd64 
+        curl -sLO https://github.com/argoproj/argo/releases/download/v2.11.1/argo-linux-amd64.gz
+        gunzip argo-linux-amd64.gz
+        ls -l
+        chmod +x argo-linux-amd64
         # $HOME : /home/runner
         # whoami : runner
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
-        mv ./argo-linux-amd64 $HOME/bin/argo
+        sudo mv ./argo-linux-amd64 /usr/local/bin/argo
         argo version
     - name: Submit the argo test workflow
       run: |
