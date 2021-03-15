@@ -17,16 +17,13 @@ jobs:
       run: |
         kubectl create ns argo
         kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml
-        curl -sLO https://github.com/argoproj/argo/releases/download/v2.10.0-rc3/argo-linux-amd64
+        curl -sLO https://github.com/argoproj/argo/releases/download/v2.11.1/argo-linux-amd64.gz
         chmod +x argo-linux-amd64 
-        echo $HOME
-        whoami
-        pwd
-        ls $HOME/bin
         # $HOME : /home/runner
         # whoami : runner
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
         mv ./argo-linux-amd64 $HOME/bin/argo
+        ls -l $HOME/bin/
         argo version
     - name: Submit the argo test workflow
       run: |
