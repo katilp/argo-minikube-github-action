@@ -10,9 +10,9 @@ jobs:
     - name: Check the runner
       run: |
         ls -l /usr/local/bin/
-    - name: setup-minikube
-      uses: medyagh/setup-minikube@v0.0.2
-      continue-on-error: true
+    - name: Start a minikube cluster
+      run: |
+        minikube start
     - name: Set up persistent volume and storage pod
       run: |
         kubectl apply -f pv-volume.yaml 
