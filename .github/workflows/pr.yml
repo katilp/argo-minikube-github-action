@@ -7,6 +7,9 @@ jobs:
     name: argo example workflow on minikube with output
     steps:
     - uses: actions/checkout@v2
+    - name: Check the runner
+      run: |
+        ls -l /usr/local/bin/
     - name: setup-minikube
       uses: medyagh/setup-minikube@v0.0.2
       continue-on-error: true
@@ -25,8 +28,6 @@ jobs:
         # whoami : runner
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
         sudo mv ./argo-linux-amd64 /usr/local/bin/argo
-        ls -l /usr/local/bin/
-        which argo
         argo version
     - name: Submit the argo test workflow
       run: |
