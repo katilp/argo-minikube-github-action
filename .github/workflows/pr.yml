@@ -26,6 +26,8 @@ jobs:
         # pwd : /home/runner/work/argo-minikube-github-action/argo-minikube-github-action
         mv ./argo-linux-amd64 $HOME/bin/argo
         ls -l $HOME/bin/
+        echo $PATH
+        which argo
         argo version
     - name: Submit the argo test workflow
       run: |
